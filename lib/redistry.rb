@@ -1,20 +1,29 @@
 require 'redis'
 require 'redistry/version'
-require 'redistry/serializers/activerecord'
 require 'redistry/has_list'
+require 'redistry/serializers/json'
 
 module Redistry
   extend self
 
-  attr_accessor :client, :serializer
+  attr_accessor :client
+  attr_reader   :loaded_frameworks
+
 
   def client
     @client ||= Redis.new
   end
 
-  def serializer
-    @serializer ||= Redistry::Serializers::ActiveRecord.new
+  def setup!
+    @loaded_frameworks = []
+  end
+
+  def setup_active_record!
+    require 'redistry/serializers/activerecord'
+    ActiveRecord::Base.send(:include, Redistry::HasList)   
+    @loaded_frameworks << :activerecord
   end
 end
 
-ActiveRecord::Base.send(:include, Redistry::HasList) if defined?(ActiveRecord)
+Redistry.setup!
+Redistry.setup_active_record! if defined?(ActiveRecord)

@@ -8,8 +8,4 @@ describe Redistry do
   it "should have default client" do
     Redistry.client.class.should == Redis
   end
-
-  it "should have default serializer" do
-    Redistry.serializer.class.should == Redistry::Serializers::ActiveRecord
-  end
 end

@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'redistry/serializers/activerecord'
 
 class ARStub
   attr_accessor :id

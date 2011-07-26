@@ -10,7 +10,8 @@ module Redistry
     module ClassMethods
       
       def has_list(name, options = {})
-        instance_variable_set("@_#{name}_has_list".to_sym, CollectionProxy.new(self, name, options))
+        klass = options.delete(:class) || self
+        instance_variable_set("@_#{name}_has_list".to_sym, CollectionProxy.new(klass, name, options))
 
         class_eval <<-EOF
           def self.#{name}
