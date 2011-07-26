@@ -10,13 +10,19 @@ describe Redistry::HasList do
   let(:klass) { Stubba }
 
   describe "#list" do
-    it "should be empty" do
-      klass.list.should == []
-    end
-
     describe "#key" do
       it "should be <class>-<list_name>" do
         klass.list.key.should == "#{klass.name}-list"
+      end
+    end
+
+    describe "#all" do
+      context "when empty" do
+
+      end
+
+      context "when not empty" do
+
       end
     end
 
