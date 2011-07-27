@@ -7,6 +7,10 @@ Add `redistry` to your `Gemfile`
 
     gem "redistry"
 
+You can also use your own redis client connection rather than the default `Redis.new` (in an initializer, for example)
+
+    Redistry.client = Redis.new(:host => 'my-redis-host', :port => 6379)
+
 
 #### Using has_list
 
