@@ -1,6 +1,6 @@
 require 'redis'
 require 'redistry/version'
-require 'redistry/has_list'
+require 'redistry/list'
 require 'redistry/serializers/json'
 
 module Redistry
@@ -20,7 +20,7 @@ module Redistry
 
   def setup_active_record!
     require 'redistry/serializers/activerecord'
-    ActiveRecord::Base.send(:include, Redistry::HasList)   
+    ActiveRecord::Base.send(:include, Redistry::List)   
     @loaded_frameworks << :activerecord
   end
 end

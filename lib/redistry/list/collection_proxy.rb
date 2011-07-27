@@ -1,5 +1,5 @@
 module Redistry
-  module HasList
+  module List
     class CollectionProxy
       attr_accessor :klass, :collection_name, :options
       
