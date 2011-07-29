@@ -6,7 +6,9 @@ module Redistry
       end
 
       def deserialize(klass, *objs)
-        klass.find(objs.flatten)
+        ids = objs.flatten
+        ar_objects = klass.find(objs.flatten).inject({}) { |h,o| h[o.id.to_s] = o; h }
+        ids.map { |i| ar_objects[i.to_s] }
       end
     end
   end
