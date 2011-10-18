@@ -9,14 +9,17 @@ module Redistry
   attr_accessor :client
   attr_reader   :loaded_frameworks
 
-
   def client
     @client ||= Redis.new
   end
 
   def setup!
     @loaded_frameworks = []
+
+    setup_active_record! if defined?(ActiveRecord)
   end
+
+  private
 
   def setup_active_record!
     require 'redistry/serializers/activerecord'
@@ -26,4 +29,3 @@ module Redistry
 end
 
 Redistry.setup!
-Redistry.setup_active_record! if defined?(ActiveRecord)
