@@ -8,9 +8,7 @@ describe Redistry do
 
     describe '.setup!' do
       before do
-        Redistry.instance_eval do
-          @loaded_frameworks = nil
-        end
+        Redistry.loaded_frameworks = nil
       end
 
       context 'given that ActiveRecord is defined' do
