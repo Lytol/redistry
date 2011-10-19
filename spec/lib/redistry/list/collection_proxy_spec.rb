@@ -123,11 +123,11 @@ module Redistry
           end
 
           it 'should return itself' do
-            proxy.add([1,2]).should == proxy
+            proxy.add(objs).should == proxy
           end
  
           context 'given a collection proxy with no size option' do
-            it 'should push the given objects to the redis list' do
+            it 'should push the given objects to the redistry list' do
               client.should_receive(:lpush).with('SnoopDogg-the-dogg-pound', 1)
               client.should_receive(:lpush).with('SnoopDogg-the-dogg-pound', 2)
 
@@ -165,7 +165,7 @@ module Redistry
         end
 
         describe '#key' do
-          it 'should return a string built from the class and collection names' do
+          it 'should return a string built from the class name and collection name' do
             proxy.key.should == "SnoopDogg-#{collection_name}"
           end
         end
