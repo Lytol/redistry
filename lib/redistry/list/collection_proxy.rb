@@ -1,13 +1,13 @@
 module Redistry
   module List
     class CollectionProxy
-      attr_accessor :klass, :collection_name, :options
+      attr_accessor :klass, :collection_name, :options, :serializer
       
       def initialize(klass, collection_name, options = {})
-        self.klass = klass
-        self.collection_name = collection_name
-        self.options = default_options.merge(options)
-        setup_serializer!
+        @klass           = klass
+        @collection_name = collection_name
+        @options         = default_options.merge(options)
+        @serializer      = setup_serializer
       end
 
       def all
@@ -17,6 +17,7 @@ module Redistry
 
       def add(*objs)
         serialized_objs = @serializer.serialize(klass, objs.flatten)
+
         serialized_objs.reverse.each do |val|
           Redistry.client.lpush(key, val)
         end
@@ -24,11 +25,13 @@ module Redistry
         if options[:size]
           Redistry.client.ltrim(key,0,options[:size]-1)
         end
+
         self
       end
 
       def clear
         Redistry.client.del(key)
+
         self
       end
 
@@ -39,22 +42,18 @@ module Redistry
       private
 
         def default_options
-          {
-            :size => nil
-          }
+          { :size => nil }
         end
 
-        def setup_serializer!
-          @serializer = begin
-            if Redistry.loaded_frameworks.include?(:activerecord) &&
-               klass < ActiveRecord::Base
+        def setup_serializer
+          begin
+            if Redistry.loaded_frameworks.include?(:activerecord) && klass < ActiveRecord::Base
               Redistry::Serializers::ActiveRecord.new
             else
               Redistry::Serializers::JSON.new
             end
           end
         end
-
     end
   end
 end

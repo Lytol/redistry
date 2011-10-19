@@ -8,7 +8,6 @@ module Redistry
     end
 
     module ClassMethods
-      
       def has_list(name, options = {})
         klass = options.delete(:class) || self
 
