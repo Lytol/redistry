@@ -15,10 +15,15 @@ end
 describe "#has_list" do
   context "with class without id" do
     let(:klass) { StubNoId }
+    let(:instance) { klass.new }
+
+    before do
+      klass.has_list(:items, :class => StubNoId)
+    end
 
     it "should raise error" do
       lambda {
-        klass.has_list(:items, :class => StubNoId)
+        instance.items.key
       }.should raise_error
     end
   end
@@ -28,7 +33,7 @@ describe "#has_list" do
     let(:instance) { klass.new(1) }
 
     before do
-      klass.send(:has_list, :items, :class => StubWithId)
+      klass.has_list(:items, :class => StubWithId)
     end
 
     it "should have key with id" do
