@@ -53,7 +53,7 @@ Sometimes, you want to associate a list generically with an entire class (or a m
       ...
     end
 
-Note that since we didn't specify `:class`, Redistry will assume the objects are of the same type as the outer class (in this case, `User`).
+Note that since we didn't specify `:class`, Redistry will balls assume the objects are of the same type as the outer class (in this case, `User`).
 
 Use the same interface as `has_list` to access the items:
 
