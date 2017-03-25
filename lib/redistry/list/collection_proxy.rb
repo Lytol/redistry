@@ -39,33 +39,32 @@ module Redistry
 
       private
 
-        def default_options
-          {
-            :serializer => nil,
-            :size       => nil
-          }
-        end
+      def default_options
+        { 
+          :serializer => nil,
+          :size       => nil
+        }
+      end
 
-        def setup_serializer!
-          @serializer = case options[:serializer]
-            when :activerecord
-              Redistry::Serializers::ActiveRecord.new
-            when :json
-              Redistry::Serializers::JSON.new
-            else
-              default_serializer
-            end
-        end
-
-        def default_serializer
-          if Redistry.loaded_frameworks.include?(:activerecord) &&
-             klass < ActiveRecord::Base
+      def setup_serializer!
+        @serializer = case options[:serializer]
+          when :activerecord
             Redistry::Serializers::ActiveRecord.new
-          else
+          when :json
             Redistry::Serializers::JSON.new
+          else
+            default_serializer
           end
-        end
+      end
 
+      def default_serializer
+        if Redistry.loaded_frameworks.include?(:activerecord) &&
+           klass < ActiveRecord::Base
+          Redistry::Serializers::ActiveRecord.new
+        else
+          Redistry::Serializers::JSON.new
+        end
+      end
     end
   end
 end

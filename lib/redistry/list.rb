@@ -2,13 +2,11 @@ require 'redistry/list/collection_proxy'
 
 module Redistry
   module List
-
     def self.included(base)
       base.extend(ClassMethods)
     end
 
     module ClassMethods
-      
       def has_list(name, options = {})
         klass = options.delete(:class) || self
 

@@ -20,11 +20,11 @@ module Redistry
 
   private
 
-    def setup_active_record!
-      require 'redistry/serializers/activerecord'
-      ActiveRecord::Base.send(:include, Redistry::List)   
-      @loaded_frameworks << :activerecord
-    end
+  def setup_active_record!
+    require 'redistry/serializers/activerecord'
+    ActiveRecord::Base.send(:include, Redistry::List)   
+    @loaded_frameworks << :activerecord
+  end
 end
 
 Redistry.setup!
